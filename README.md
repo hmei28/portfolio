@@ -1,2 +1,1 @@
-# portfolio
-portfolio with django
+# resume_django
