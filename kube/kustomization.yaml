@@ -1,0 +1,7 @@
+
+resources:
+  - secret.yaml
+  - pvc.yaml
+  - deploy.yaml
+  - service.yaml
+  - ingress.yaml

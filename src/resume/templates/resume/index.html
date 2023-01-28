@@ -1,0 +1,206 @@
+{% load static %}
+{% load tailwind_tags %}
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+  <head>
+    <link rel="stylesheet" href="{% static 'resume/style/style.css' %}">
+    {% tailwind_css %}
+    <meta charset="UTF-8">
+    <title>LE CV</title>
+  </head>
+
+  <body class=" w-full bg-stone-900 text-stone-300 font-vt323 text-3xl " >
+    
+    <canvas class="fixed "></canvas>
+    
+    <!-- Nav -->
+    <header class="header-area">
+      <div class=" relative top-0 left-0 z-40">
+        <div class="fixed w-full py-4 px-2 ">
+          <nav class="font-vt323 text-3xl backdrop-blur-sm ">  
+              <ul class="flex flex-row space-x-4 shadow-lg shadow-green-700"> 
+                <li><a href="#" class="block mx-2 font-mediumbold hover:text-green-700 active:text-green-500" aria-current="page">root@aettassi:~$ cd</a></li>
+                <li><a href="#about" class="block active:text-green-500 transition ease-in-out delay-150 hover:scale-110 hover:text-green-700 duration-150">About_me/</a></li>
+                <li><a href="#skills" class="block active:text-green-500 transition ease-in-out delay-150 hover:scale-110 hover:text-green-700 duration-150 ">Skills/</a></li>
+                <li><a href="#experiences" class="block active:text-green-500 transition ease-in-out delay-150 hover:scale-110 hover:text-green-700 duration-150">Experiences/</a></li>
+                <li><a href="#formations" class="block active:text-green-500 transition ease-in-out delay-150 hover:scale-110 hover:text-green-700 duration-150">Formations/</a></li>
+                <li><a href="#contact" class="block active:text-green-500 transition ease-in-out delay-150 hover:scale-110 hover:text-green-700 duration-150" >Contact/</a></li>
+              </ul> 
+          </nav>
+        </div>
+      </div> 
+    </header>
+
+    <main>
+     <!-- home page-->
+     <section id='home-page'>
+        <div class=" w-screen h-screen mx-auto pt-60 ">
+          <div class="container mx-auto">
+            <h1 class="text-8xl text-green-800 font-thin font-press-start text-center" id="elementEl">{% for i in perso_info %}{{ i.firstname|upper }} {{ i.lastname|upper }}{% endfor %}</h1>
+            <p class="pb-6 text-4xl font-vt323 text-center" >\{% for i in perso_info %}{{ i.job_title }}{% endfor %}</p>
+        </div>
+      </section>
+
+      <!-- about -->
+      <section id='about' class="pt-12 pb-10 pl-4 ">
+        <div  class="container mx-auto p-2 backdrop-filter backdrop-blur-sm shadow-sm backdrop-brightness-100 shadow-white rounded">
+          <div class="flex flex-col">
+              <div class="pb-6">
+                <h2 class="text-green-600 font-vt323 text-6xl ml-2">About_me/</h2>
+              </div>
+              <div class="flex flex-row">
+                {% for i in perso_info %}                
+                  <div class=" basis-1/3 m-2 p-auto">
+                    <img class="fill-blue-500 w-6/12 mix-blend-color-burn opacity-30" src="{% static "resume/imgs/beard.png"%}">
+                    <div class="flex flex-row items-center">
+                        <p class="text-l"><span class="text-indigo-700">&lt;link&gt; </span></p>
+                        <a class=" font-extrabold flex px-1 mx-1 rounded-md flex-row bg-green-700 text-stone-900 font-medium transition transition-colors hover:scale-110 hover:bg-green-500 duration-300 delay-100" href="{{ i.linkedin }}" title="linkedin link"  target="_blank" rel="noopener noreferrer">
+                          in
+                        </a>|
+                        <a class="font-medium flex px-1 mx-1 rounded-md flex-row bg-green-700 text-stone-900 font-medium transition transition-colors hover:scale-110 hover:bg-green-500 duration-300 delay-100" href="{{ i.file_cv.url }}" title="Download CV" target="_blank" rel="noopener noreferrer" >
+                          CV <svg class="w-8 h-8 pl-2 stroke-stone-900 stroke-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 20" stroke="currentColor" >
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                          </svg>
+                        </a>
+                        <p class="text-indigo-700"> &lt;/link&gt;</p>
+                    </div>
+                  </div>
+                  <div class="basis-1/3 ml-0 font-vt323 text-3xl p-auto">
+                    <p class="text-l m-2 text-indigo-700	">&lt;information&gt;</p>
+                    <p class="text-l m-2 pl-6 ">{{ i.information }}</p>
+                    <p class="text-l m-2 text-indigo-700	">&lt;/information&gt;</p>
+                  </div>
+                  <div class="basis-1/3 ml-0 font-vt323 text-3xl p-auto">
+                    <p class="text-l m-2 text-indigo-700">&lt;hobbies&gt;</p>
+                    <p class="text-l m-2 pl-6 ">{{ i.hobbies }}</p>
+                    <p class="text-l m-2 text-indigo-700">&lt;/hobbies&gt;</p>
+                  </div>              
+                  {% endfor %}
+              </div>              
+          </div>                
+        </div>
+      </section>
+  
+        <!-- Skills -->
+      <section id='skills' class="pt-12 pb-10 pl-4 bg-stone-900">
+        <div class="container mx-auto p-2 backdrop-filter focus:border-stone-300 backdrop-blur-sm shadow-sm backdrop-brightness-100 shadow-white rounded">
+          <div class="flex flex-col">
+            <div class="pb-6">
+              <h2 class="font-vt323 text-6xl text-green-600">Skills/</h2>
+            </div>
+            <div class="grid grid-cols-3 gap-4 ml-4">
+              {% for dict_skills in skill %}
+                <div>
+                 <p class="text-l m-2 text-indigo-700	">&lt;{{ dict_skills.type }}&gt;</p>
+                <lu class="list-none">
+                  {% for skill_item in dict_skills.skills %}
+                    <li class="pl-6">
+                    {% if skill_item.status == '2' %}
+                      <span class="text-stone-500" >++ {{ skill_item.name }}</span>
+                    {% elif skill_item.status == '3' %}  
+                      <span class="text-stone-300" >+++ {{ skill_item.name }}</span>
+                    {% else %}  
+                    <span class="text-stone-700" >+ {{ skill_item.name }}</span>
+                    {% endif %}
+                    </li>                     
+                  {% endfor %}
+                </lu>
+                <p class="text-l m-2 text-indigo-700	">&lt;/{{ dict_skills.type }}&gt;</p>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </section>
+      
+        <!-- Experiences -->
+      <section id='experiences' class="pt-12 pb-10 pl-4 bg-stone-900">
+        <div class="container mx-auto p-2 backdrop-filter backdrop-blur-sm shadow-sm backdrop-brightness-100 shadow-white rounded">
+          <div class="flex flex-col">
+            <div class="pb-6">
+              <h2 class="font-vt323 text-6xl text-green-600">Experiences/</h2>
+            </div>
+            <div class="grid grid-cols-2 gap-4 ml-4">
+              {% for exp in experience %}
+                <div>
+                 <p class="text-l m-2 text-indigo-700	">&lt;{{ exp.title }}&gt;</p>
+                 <p class="pb-2 pl-6">{{ exp.start_date }} -- {{ exp.end_date }} | <span class="text-green-700" >{{ exp.company }}</span></p>
+                  <div class="pl-8">
+                    {{ exp.missions |linebreaks }}
+                  </div> 
+                  <p class="text-l m-2 text-indigo-700	">&lt;/{{ exp.title }}&gt;</p>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>  
+      </section>  
+      
+        <!-- Foramtions -->
+    <section id='formations' class="pt-12 pb-10 pl-4 bg-stone-900">
+      <div class="container mx-auto p-2 backdrop-filter backdrop-blur-sm shadow-sm backdrop-brightness-100 shadow-white rounded">
+        <div class="flex flex-col">
+          <div class="pb-6">
+            <h2 class="font-vt323 text-6xl text-green-600 ml-2">Formations/</h2>
+          </div>
+          <div class="grid grid-cols-2 gap-4 ml-4">
+          {% for formation_item in formation %}
+            <div class="pb-6">
+              <p class="text-l  text-indigo-700	">&lt;{{ formation_item.title }}&gt;</p>
+              <p class="ml-6">{{ formation_item.date }} | <span class="text-green-700">{{ formation_item.city }}</span></p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+        <!-- contact -->
+    <section id='contact' class="pt-12 pb-10 pl-4 bg-stone-900 text-2xl">
+      <div class="container mx-auto p-2  backdrop-filter backdrop-blur-sm shadow-sm backdrop-brightness-100 shadow-white rounded ">
+        <div class="flex flex-col ">
+          <div class="pb-6">
+            <h2 class="font-vt323 text-6xl text-green-600">Contact_me/</h2>
+          </div>
+          {% if messages %}
+          <div class="text-center text-3xl messages mb-4 text-indigo-500 ">
+              {% for message in messages %}
+              <p  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </p>
+              {% endfor %}
+          </div>
+        {% endif %}
+          <form method="post" action="" enctype="multipart/form-data" class="space-y-8">
+            <div class="form-outline mb-4">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" class="text-3xl font-mediumbold rounded-md py-2 px-2 bg-green-700 center transition transition-colors hover:scale-110 hover:bg-green-600 duration-300 delay-100 text-stone-900">Submit</button>
+            </div>
+          </form>
+      </section>
+    </main>
+    <script src="{% static 'resume/js/main.js' %} "></script>
+    <script src="{% static 'resume/js/typing.js' %} "></script>
+  </body>
+  <footer>
+    
+    <div  class="w-full max-w-full py-10 backdrop-filter backdrop-blur-sm border-t border-stone-300">
+      {% for i in perso_info %}                
+      <div class="flex flex-row justify-center">
+        <a class=" px-1 mx-1 font-extrabold flex mx-1 text-green-700 font-medium transition transition-colors hover:scale-110 hover:text-green-500 duration-300 delay-100" href="{{ i.linkedin }}" title="linkedin link"  target="_blank" rel="noopener noreferrer">
+          in
+        </a>
+        <a class="px-1 mx-1" href="{{ i.github }}" title="GitHub link" target="_blank" rel="noopener noreferrer" >
+          <svg class="w-10 h-10 pl-2 fill-green-700 stroke-2 transition transition-colors hover:scale-110 hover:fill-green-500 duration-300 delay-100" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        </a>
+        <a class="px-1 mx-1" href="mailto:{{ i.mail }}" title="email" target="_blank" rel="noopener noreferrer" >
+          <svg class="w-10 h-10 pl-2 fill-green-700 stroke-green-900 stroke-1 transition transition-colors hover:scale-110 hover:fill-green-500 duration-300 delay-100" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+          </svg>
+        </a>
+      </div>
+      <p class="text-center text-2xl">&copy; 2023 {{ i.website }}</p>
+    </div>
+    {% endfor %}
+
+  </footer>
+  
+</html>
