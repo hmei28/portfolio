@@ -25,6 +25,7 @@ class Command(BaseCommand):
 
             get_user = get_user_model().objects.get(username = username)
             if get_user.check_password(password):
+                self.stdout.write(f'User {username} already exist ')
                 return
             else:
                 try:
