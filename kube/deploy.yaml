@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portfolio-deployment
+  labels:
+    app.kubernetes.io/name: portfolio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: portfolio
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: portfolio
+    spec:
+      initContainers:
+        - name: portfolio-preconfig
+          image: hmei28/portfolio:latest
+          env:
+            - name: DB_HOST
+              value: "pql-postgresql"
+            - name: DB_NAME
+              value: "portfolio"
+            - name: DB_USER
+              value: "django"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pql-postgresql
+                  key: password
+          envFrom:
+            - secretRef:
+                name: portfolio
+          command:
+            - bash
+            - -c
+            - python3 manage.py migrate && python3 manage.py managesuperuser
+
+      containers:
+        - name: portfolio
+          image: hmei28/portfolio:latest
+          env:
+            - name: DB_HOST
+              value: "pql-postgresql"
+            - name: DB_NAME
+              value: "portfolio"
+            - name: DB_USER
+              value: "django"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pql-postgresql
+                  key: password
+          envFrom:
+            - secretRef:
+                name: portfolio
+          command:
+            - bash
+            - -c
+            - gunicorn --bind 0.0.0.0:8000 portfolio.wsgi
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+            - mountPath: /app/medias
+              name: portfolio-data
+              subPath: medias
+
+      volumes:
+      - name: portfolio-data
+        persistentVolumeClaim:
+          claimName: portfolio

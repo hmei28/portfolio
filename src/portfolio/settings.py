@@ -166,15 +166,3 @@ EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=False)
 
 # list of recipient mail to be separeted by comma 
 DEFAULT_EMAIL_RECIPIENT = env('DEFAULT_EMAIL_RECIPIENT')
-
-# 
-# print (type(EMAIL_BACKEND))
-# print (type(EMAIL_HOST))
-# print (type(EMAIL_HOST_USER  ))
-# print (type(EMAIL_HOST_PASSWORD))
-# print (type(EMAIL_PORT))
-# print (EMAIL_USE_TLS)
-# 
-# 
-# print (DEBUG)
-# print(ALLOWED_HOSTS)
