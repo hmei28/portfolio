@@ -3,7 +3,7 @@ name: Build Docker Image and Push to registry
 on:
   push:
     branches:
-      - 'master'
+      - '*'
     tags:
       - '*'
 
