@@ -16,7 +16,7 @@ spec:
     spec:
       initContainers:
         - name: portfolio-preconfig
-          image: hmei28/portfolio:latest
+          image: hmei28/portfolio:1.0.0
           env:
             - name: DB_HOST
               value: "pql-postgresql"
