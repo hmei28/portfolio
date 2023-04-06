@@ -16,7 +16,7 @@ spec:
     spec:
       initContainers:
         - name: portfolio-preconfig
-          image: hmei28/portfolio:1.0.0
+          image: hmei28/portfolio:latest
           env:
             - name: DB_HOST
               value: "pql-postgresql"
@@ -62,7 +62,9 @@ spec:
           command:
             - bash
             - -c
-            - gunicorn --bind 0.0.0.0:8000 portfolio.wsgi
+            - >-
+              python manage.py collectstatic --noinput &&
+              gunicorn --bind 0.0.0.0:8000 portfolio.wsgi
           ports:
             - containerPort: 8000
           volumeMounts:
